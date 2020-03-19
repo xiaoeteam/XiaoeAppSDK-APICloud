@@ -1,0 +1,8 @@
+{
+	"modules":[
+		{
+			"name":"xeShopSDK",
+			"class": "com.xiaoe.shop.sdk.apicloud.XEShopSDKModule"
+		}
+	]
+}

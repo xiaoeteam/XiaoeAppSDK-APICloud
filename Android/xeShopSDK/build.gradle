@@ -1,0 +1,31 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
+
+    defaultConfig {
+        minSdkVersion Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
+        versionCode Integer.parseInt(project.ANDROID_BUILD_VERSION_CODE)
+        versionName project.ANDROID_BUILD_VERSION_NAME
+
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+}
+
+dependencies {
+    // APICloud接口层
+    compileOnly files("$rootDir/apicloud/apiEngine v1.1.0.jar")
+
+    // XEShopSDK
+    // 外部依赖需要一起提供aar包，不打包进本模块aar中
+    compileOnly files("$rootDir/dependencies/xiaoe_shop_sdk_release_v1.1.6.aar")
+    compileOnly files("$rootDir/dependencies/appcompat-v7-25.3.1.aar") // 需要与APICloud后台保持一致
+}

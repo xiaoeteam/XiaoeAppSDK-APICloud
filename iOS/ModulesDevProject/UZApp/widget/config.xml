@@ -1,0 +1,18 @@
+<widget id="A123456789"  version="0.0.1">
+    <name>小鹅通店铺 Demo</name>
+    <description>
+        小鹅通店铺 Demo 示例应用.
+    </description>
+    <author email="developer@apicloud.com" href="https://www.apicloud.com">
+        APICloud
+    </author>
+    <content src="index.html" />
+    <feature name="xeShopSDK">
+        <param name="clientId" value="883pzzGyzynE72G"/>
+        <param name="appId" value="app38itOR341547"/>
+        <param name="scheme" value="xx ios项目的urlScheme  xx"/>
+        <param name="isLog" value="true or false"/>
+    </feature>
+    <preference name="debug" value="true"/>
+    <preference name="urlScheme" value=" xx ios项目的urlScheme  x " />
+</widget>

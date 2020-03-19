@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Module Develop</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <style type="text/css">
+	html,body{
+		height: 100%
+	}
+	body{
+		background-color: #fff;
+	    margin: 0;
+	}
+	#wrap{
+	    height: 100%;
+	    position: relative;
+	}
+	#header{
+		background-color: #5082c2;
+		height: 44px;
+	    position: relative;
+	}
+	#header h1{
+	    font-size: 20px;
+	    height: 44px;
+	    line-height: 44px;
+	    margin: 0em;
+	    color: #fff;
+		margin-left: 100px;
+		margin-right: 100px;
+		text-align: center;
+	}
+    #main{
+        display: block;
+    }
+    a.button{
+        display: -webkit-box;
+        -webkit-box-pack: center;
+        -webkit-box-align: center;
+        height: 36px;
+        margin: 8px;
+        background-color: rgba(240,240,240,1.0);
+        border-color: rgba(220,220,220,1.0);
+        border-width: 2px;
+        border-style: solid;
+	}
+    a.active{
+        background-color: rgba(240,240,240,0.6);
+	}
+</style>
+</head>
+<body>
+<div id="wrap">
+    <header id="header">
+        <h1 id="title">小鹅通店铺 Demo</h1>
+    </header>
+    <div id="main">
+        <a class="button" tapmode="active" onclick="openShop()">打开店铺</a>
+        <div id='sdk-info'></div>
+    </div>
+</div>
+</body>
+<script>
+    var xeShopSDKParams = {
+      shopUrl: "https://app38itOR341547.sdk.xiaoe-tech.com"
+    };
+
+    var xeShopSDK = null;
+
+    apiready = function() {
+
+        // 引入xeShopSDK模块
+        xeShopSDK = api.require('xeShopSDK');
+
+        // 初始化xeShopSDK
+        xeShopSDK.init();
+
+        // 设置标题
+        xeShopSDK.setTitle({
+          title: '小鹅通店铺 Demo'
+        });
+
+        // 设置样式
+        xeShopSDK.setNavStyle({
+          titleColor: '#333333',
+          titleFontSize: 20,
+          backgroundColor: '#eeeeee'
+        });
+
+        // 获取 SDK 版本
+        var sdkVersion = xeShopSDK.getSdkVersion();
+        var str = '<ul>';
+        str += '<li>SDK版本: ' + sdkVersion + '</li>';
+        str += '</ul>';
+        document.getElementById('sdk-info').innerHTML = str;
+
+        // 适配异形屏幕
+        var header = document.getElementById('header');
+        header.style.paddingTop = api.safeArea.top + 'px';
+        api.removeLaunchView();
+    };
+
+    // 打开店铺
+    function openShop() {
+        var param = {
+          url: xeShopSDKParams.shopUrl
+        };
+        var xeShopEvents = {
+          Login: 501,
+          Share: 503,
+        };
+        var callback = function (ret, err) {
+          if (ret) {
+            var result = JSON.stringify(ret)
+            console.log(result);
+            switch (ret.code) {
+              case xeShopEvents.Login:
+                api.toast({
+                  msg: "Login\n" + result,
+                  location: "middle",
+                  global: true
+                });
+                break;
+              case xeShopEvents.Share:
+                api.toast({
+                  msg: "Share\n" + result,
+                  location: "middle",
+                  global: true
+                });
+                break;
+            }
+          } else {
+            console.log(JSON.stringify(err));
+          }
+        };
+        xeShopSDK.open(param, callback);
+    }
+
+    // 注销
+    function logoutSDK() {
+      xeShopSDK.logoutSDK();
+    }
+
+    // 日志开关
+    function setLog(enabled) {
+      xeShopSDK.isLog(enabled);
+    }
+
+</script>
+</html>

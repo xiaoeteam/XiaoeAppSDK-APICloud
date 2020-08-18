@@ -18,8 +18,8 @@ import com.xiaoe.shop.sdk.apicloud.internal.APICloudUtils;
 import com.xiaoe.shop.sdk.apicloud.internal.XEShopDecoration;
 import com.xiaoe.shop.sdk.apicloud.internal.XEShopEventEmitter;
 import com.xiaoe.shop.sdk.apicloud.internal.XETokenModel;
-import com.xiaoe.shop.webcore.XEToken;
-import com.xiaoe.shop.webcore.XiaoEWeb;
+import com.xiaoe.shop.webcore.core.XEToken;
+import com.xiaoe.shop.webcore.core.XiaoEWeb;
 
 public class XEShopActivity extends Activity {
     public static String EXTRA_SHOP_URL = "shop_url";
@@ -173,7 +173,7 @@ public class XEShopActivity extends Activity {
     protected void onResume() {
         super.onResume();
         if (mXiaoEWeb != null) {
-            mXiaoEWeb.webLifeCycle().onResume();
+            mXiaoEWeb.onResume();
         }
     }
 
@@ -181,7 +181,7 @@ public class XEShopActivity extends Activity {
     protected void onPause() {
         super.onPause();
         if (mXiaoEWeb != null) {
-            mXiaoEWeb.webLifeCycle().onPause();
+            mXiaoEWeb.onPause();
         }
     }
 
@@ -191,7 +191,7 @@ public class XEShopActivity extends Activity {
         XETokenModel.getInstance().removeObserver(mTokenObserver);
 
         if (mXiaoEWeb != null) {
-            mXiaoEWeb.webLifeCycle().onDestroy();
+            mXiaoEWeb.onDestroy();
         }
     }
 

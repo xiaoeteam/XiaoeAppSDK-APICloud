@@ -1,7 +1,8 @@
 package com.xiaoe.shop.sdk.apicloud.internal;
 
-import com.xiaoe.shop.webcore.bridge.JsBridgeListener;
-import com.xiaoe.shop.webcore.bridge.JsCallbackResponse;
+
+import com.xiaoe.shop.webcore.core.bridge.JsBridgeListener;
+import com.xiaoe.shop.webcore.core.bridge.JsCallbackResponse;
 
 public class XEShopEventEmitter implements JsBridgeListener {
     private static volatile XEShopEventEmitter sInstance = new XEShopEventEmitter();

@@ -1,6 +1,7 @@
 package com.xiaoe.shop.sdk.apicloud;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.uzmap.pkg.uzcore.UZWebView;
 import com.uzmap.pkg.uzcore.uzmodule.ModuleResult;
@@ -10,10 +11,10 @@ import com.xiaoe.shop.sdk.apicloud.internal.APICloudUtils;
 import com.xiaoe.shop.sdk.apicloud.internal.XEShopDecoration;
 import com.xiaoe.shop.sdk.apicloud.internal.XEShopEventEmitter;
 import com.xiaoe.shop.sdk.apicloud.internal.XETokenModel;
-import com.xiaoe.shop.webcore.XiaoEWeb;
-import com.xiaoe.shop.webcore.bridge.JsBridgeListener;
-import com.xiaoe.shop.webcore.bridge.JsCallbackResponse;
-import com.xiaoe.shop.webcore.bridge.JsInteractType;
+import com.xiaoe.shop.webcore.core.XiaoEWeb;
+import com.xiaoe.shop.webcore.core.bridge.JsBridgeListener;
+import com.xiaoe.shop.webcore.core.bridge.JsCallbackResponse;
+import com.xiaoe.shop.webcore.core.bridge.JsInteractType;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,7 +63,7 @@ public class XEShopSDKModule extends UZModule {
         }
 
         // 初始化SDK
-        XiaoEWeb.init(context().getApplicationContext(), appId, clientId);
+        XiaoEWeb.init(context().getApplicationContext(), appId, clientId, XiaoEWeb.WebViewType.X5);
         XiaoEWeb.isOpenLog(isOpenLog);
 
         // 初始化样式配置
@@ -154,8 +155,8 @@ public class XEShopSDKModule extends UZModule {
     }
 
     public ModuleResult jsmethod_getSdkVersion_sync(final UZModuleContext moduleContext) {
-        final String version = XiaoEWeb.getSdkVersion();
-
+        final String version = XiaoEWeb.getSdkVersion(context());
+        Log.d("york","version="+version);
         return new ModuleResult(version);
     }
 

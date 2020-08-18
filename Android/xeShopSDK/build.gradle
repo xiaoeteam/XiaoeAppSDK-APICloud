@@ -25,7 +25,10 @@ dependencies {
     compileOnly files("$rootDir/apicloud/apiEngine v1.1.0.jar")
 
     // XEShopSDK
+    implementation files("$rootDir/dependencies/okhttp-4.2.2.jar")
+    implementation files("$rootDir/dependencies/okio-2.8.0.jar")
+    compileOnly files("$rootDir/dependencies/tbs_sdk_thirdapp_v4.3.0.39_43939_sharewithdownloadwithfile_withoutGame_obfs_20200713_223411.jar")
     // 外部依赖需要一起提供aar包，不打包进本模块aar中
-    compileOnly files("$rootDir/dependencies/xiaoe_shop_sdk_release_v1.1.6.aar")
+    compileOnly files("$rootDir/dependencies/xiaoe_shop_sdk_release_v2.0.8.aar")
     compileOnly files("$rootDir/dependencies/appcompat-v7-25.3.1.aar") // 需要与APICloud后台保持一致
 }

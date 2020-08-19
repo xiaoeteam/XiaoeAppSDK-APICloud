@@ -26,7 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) UIColor *navViewColor;
 @property(nonatomic, assign) CGFloat titleFontSize;
 
-// 图标
 @property(nonatomic, copy) NSString *backImageName;
 @property(nonatomic, copy) NSString *shareImageName;
 @property(nonatomic, copy) NSString *closeImageName;

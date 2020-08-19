@@ -24,13 +24,10 @@
 
 @implementation XEWebViewController
 
-- (void)dealloc
-{
-    NSLog(@"XEWebViewController dealloc");
+- (void)dealloc {
     _webView.noticeDelegate = nil;
     _webView.delegate = nil;
     _webView = nil;
-    
 }
 
 - (void)viewDidLoad {
@@ -38,7 +35,6 @@
     
     [self setUp];
 }
-
 
 - (void)setUp {
     
@@ -134,12 +130,9 @@
 }
 
 - (UIImage *)getImage:(NSString *)imageName {
-//    NSString *name = [[NSString alloc] initWithFormat:@"Frameworks/App.framework/flutter_assets/images/ios/%@",[self getImageName:imageName]];
-//    NSString *imagePath = [[NSBundle mainBundle] pathForResource:name ofType:@"png"];
     NSString *imagePath = [[NSBundle mainBundle].bundlePath stringByAppendingPathComponent: [self getImageName:imageName]];
     return [UIImage imageWithContentsOfFile:imagePath];
 }
-
 
 - (NSString *)getImageName:(NSString *)imageName {
     NSString *name = [[NSString alloc] initWithFormat:@"%@%@@2x", ResourcePath, imageName];
@@ -158,8 +151,7 @@
     return UIModalPresentationFullScreen;
 }
 
-
-- (void) backBtnAction {
+- (void)backBtnAction {
      if (_webView.canGoBack) {
          [_webView goBack];
      } else {
@@ -176,7 +168,7 @@
 }
 
 - (void)messagePost:(NSDictionary *)dict {
-     dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
          if ([self.delegate respondsToSelector:@selector(messagePost:)]) {
              [self.delegate messagePost:dict];
          }
@@ -196,7 +188,7 @@
              [dict setObject:[NSNumber numberWithInt:501] forKey:@"code"];
              [dict setObject:@"登录通知" forKey:@"message"];
              [dict setObject:@"" forKey:@"data"];
-             
+
              [self messagePost:dict];
              
          }
@@ -208,7 +200,7 @@
              NSDictionary *response = (NSDictionary *)notice.response;
              [dict setObject:[NSNumber numberWithInt:503] forKey:@"code"];
              [dict setObject:@"分享通知" forKey:@"message"];
-             [dict setObject:response forKey:@"data"];
+             response ? [dict setObject:response forKey:@"data"] :  [dict setObject:@"" forKey:@"data"];
              [self messagePost:dict];
          }
              break;
@@ -218,7 +210,7 @@
  }
 
 
- #pragma mark - XEWebViewDelegate Delegate (可选)
+ #pragma mark - XEWebViewDelegate Delegate
 
  - (BOOL)webView:(id<XEWebView>)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
  {
@@ -231,8 +223,6 @@
      [dict setObject:[NSNumber numberWithInt:401] forKey:@"code"];
      [dict setObject:@"开始加载" forKey:@"message"];
      [dict setObject:@"success" forKey:@"data"];
-     
-//     [self messagePost:dict];
  }
 
  - (void)webViewDidFinishLoad:(id<XEWebView>)webView
@@ -241,8 +231,6 @@
      [dict setObject:[NSNumber numberWithInt:402] forKey:@"code"];
      [dict setObject:@"加载完成" forKey:@"message"];
      [dict setObject:@"success" forKey:@"data"];
-     
-//     [self messagePost:dict];
  }
 
  - (void)webView:(id<XEWebView>)webView didFailLoadWithError:(NSError *)error
@@ -251,54 +239,14 @@
      [dict setObject:[NSNumber numberWithInt:403] forKey:@"code"];
      [dict setObject:@"加载出错" forKey:@"message"];
      [dict setObject:@"error" forKey:@"data"];
-     
-//     [self messagePost:dict];
  }
 
-/**
- 对文件重命名
+#pragma mark - Autorotate
 
- @param filePath 旧路径
- @return 新路径
- */
-- (NSString *)p_setupFileRename:(NSString *)filePath {
-    
-    NSString *lastPathComponent = [NSString new];
-    //获取文件名： 视频.MP4
-    lastPathComponent = [filePath lastPathComponent];
-    //获取后缀：MP4
-    NSString *pathExtension = [filePath pathExtension];
-    //用传过来的路径创建新路径 首先去除文件名
-    NSString *pathNew = [filePath stringByReplacingOccurrencesOfString:lastPathComponent withString:@""];
-    //然后拼接新文件名：新文件名为当前的：年月日时分秒 yyyyMMddHHmmss
-    NSString *moveToPath = [NSString stringWithFormat:@"%@%@.%@",pathNew,[self htmi_getCurrentTime],pathExtension];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    //通过移动该文件对文件重命名
-    BOOL isSuccess = [fileManager moveItemAtPath:filePath toPath:moveToPath error:nil];
-    if (isSuccess) {
-        NSLog(@"rename success");
-    }else{
-        NSLog(@"rename fail");
-    }
-    
-    return moveToPath;
-}
-
-/**
- 获取当地时间
- 
- @return 获取当地时间
- */
-- (NSString *)htmi_getCurrentTime {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyyMMddHHmmss"];
-    NSString *dateTime = [formatter stringFromDate:[NSDate date]];
-    return dateTime;
-}
-
-- (BOOL)shouldAutorotate{
+- (BOOL)shouldAutorotate {
     return NO;
 }
+
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskPortrait;
 }
